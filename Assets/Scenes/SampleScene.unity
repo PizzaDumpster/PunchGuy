@@ -1051,10 +1051,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 343680008}
-  activateDistance: 2
+  activateDistance: 5
   pathUpdateSeconds: 0.5
-  speed: 5
-  jumpForce: 2
+  speed: 1
+  jumpForce: 3
   nextWaypointDistance: 3
   jumpNodeHeightRequirement: 0.8
   jumpModifier: 0
