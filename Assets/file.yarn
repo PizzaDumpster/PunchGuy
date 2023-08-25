@@ -1,0 +1,26 @@
+title: Start
+tags: moo
+---
+Mae: Well, this is great.
+Mae: I mean I didn't expect a party or anything
+Mae: but I figured *someone* would be here.
+Mae: ...
+Mae: Welcome home, Mae.
+-> option one
+    <<jump node2>>
+-> option two
+    <<jump node3>>
+===
+title: node2
+tags: moo
+position: NaN,NaN
+---
+hello
+This is a yarn file
+===
+title: node3
+tags: moo
+position: NaN,NaN
+---
+Welcome to Yarn my friend! 
+===

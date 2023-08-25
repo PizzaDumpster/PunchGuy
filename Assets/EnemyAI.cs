@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+
+
     [Header("Pathfinding")]
     public Transform target;
     public float activateDistance = 50f;
@@ -29,14 +31,17 @@ public class EnemyAI : MonoBehaviour
     Seeker seeker;
     Rigidbody2D rb;
     private bool isOnCoolDown;
+    private string currentState;
+    private Animator anim;
 
     public void Start()
     {
+        anim = GetComponent<Animator>();
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         isJumping = false;
         isInAir = false;
-        isOnCoolDown = false; 
+        isOnCoolDown = false;
 
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
@@ -83,7 +88,7 @@ public class EnemyAI : MonoBehaviour
         {
             if (direction.y > jumpNodeHeightRequirement)
             {
-                if (isInAir) return; 
+                if (isInAir) return;
                 isJumping = true;
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 StartCoroutine(JumpCoolDown());
@@ -93,11 +98,23 @@ public class EnemyAI : MonoBehaviour
         if (isGrounded)
         {
             isJumping = false;
-            isInAir = false; 
+            isInAir = false;
         }
         else
         {
             isInAir = true;
+        }
+        if (rb.velocity.x > 0.1f)
+        {
+            ChangeAnimationState("Cat3-Walk");
+        }
+        else if (rb.velocity.x < -0.1f)
+        {
+            ChangeAnimationState("Cat3-Walk");
+        }
+        else
+        {
+            ChangeAnimationState("Cat3-Idle");
         }
 
         // Movement
@@ -138,9 +155,16 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    void ChangeAnimationState(string newState)
+    {
+        if (currentState == newState) return;
+        anim.Play(newState);
+        currentState = newState;
+    }
+
     IEnumerator JumpCoolDown()
     {
-        isOnCoolDown = true; 
+        isOnCoolDown = true;
         yield return new WaitForSeconds(1f);
         isOnCoolDown = false;
     }
